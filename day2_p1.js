@@ -8,7 +8,7 @@ fs.readFile('dag2.txt', 'utf8', function (err,data) {
 	if (err) {
 		return console.log(err)
 	}
-  
+   
 	var rows = data.split( "\n" );
 	var endResult = 0
 	
