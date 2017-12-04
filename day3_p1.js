@@ -15,38 +15,39 @@ function Coordinate(x,y,value,goal) {
 	this.getValue = function() {
 		return this.value;
 	}
-	this.moveUp = function(times) {
+	this.moveUp = function() {
+		//change y-value
 		this.y +=1
-		
+		//also change coordinate value
+		this.addToValue(1)
+	}
+	this.moveDown = function() {
 		//change y-value
-		//this.y += (typeof times == 'undefined') ? 1: times;
+		this.y -= 1
 		//also change coordinate value
-		//(typeof times == 'undefined') ? this.setValue(1): this.setValue(times);
+		this.addToValue(1)
 	}
-	this.moveDown = function(times) {
-		//change y-value
-		this.y -= (typeof times == 'undefined') ? 1: times;
-		//also change coordinate value
-		(typeof times == 'undefined') ? this.setValue(1): this.setValue(times);
-	}
-	this.moveLeft = function(times) {
+	this.moveLeft = function() {
 		//change x-value
-		this.x -= (typeof times == 'undefined') ? 1: times;
-		//also change coordinate value
-		(typeof times == 'undefined') ? this.setValue(1): this.setValue(times);
+		this.x -= 1
+		///also change coordinate value
+		this.addToValue(1)
 	}
-	this.moveRight = function(times) {
+	this.moveRight = function() {
 		//change x-value
-		this.x += (typeof times == 'undefined') ? 1: times;
+		this.x += 1
 		//also change coordinate value
-		(typeof times == 'undefined') ? this.setValue(1): this.setValue(times);
+		this.addToValue(1)
 	}
 	this.getDistance = function() {
 		//returns the distance in steps back to origo (0,0)
 		return Math.abs(this.x) + Math.abs(this.y)
 	}
-	this.setValue = function(increment) {
+	this.addToValue = function(increment) {
 		this.value +=increment;
+	}
+	this.areWeThereYet = function() {
+		return (this.value == this.goal) ? true : false;
 	}
 }
 
@@ -55,7 +56,7 @@ function walkInCircles(endPos) {
 	// In the center (origo) we have a 1 at position (0,0) (x,y)
 	
 	// Lets create a coordinate starting one step to the right of origo (1,0) with the starting value 2
-	var c = new Coordinate(0,1,2)
+	var c = new Coordinate(0,1,2,9)
 	
 	//while-loop condition
 	var stop = false;
@@ -67,6 +68,7 @@ function walkInCircles(endPos) {
 	while (!stop) {
 		p("The size of the layer is: "+layerSize)
 		
+		
 		c.MoveUp()
 		stop = true
 		layerSize+=2;
@@ -77,13 +79,12 @@ function walkInCircles(endPos) {
 	
 }
 
-walkInCircles(1)
+// walkInCircles(1)
 
 
 
-// var hej = new Coordinate(1,1,2)
-// hej.moveUp(3)
-// hej.moveLeft(2)
-// p(hej.getPosition())
-// p(hej.getDistance())
-// p(hej.getValue())
+var hej = new Coordinate(1,1,2,5)
+hej.moveUp()
+hej.moveUp()
+hej.moveUp()
+p(hej.areWeThereYet())
