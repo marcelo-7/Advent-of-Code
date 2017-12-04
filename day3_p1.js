@@ -68,7 +68,7 @@ function walkInCircles(endPos) {
 	while (!stop) {
 		p("The size of the layer is: "+layerSize)
 		
-		
+		//every iteration we will move 
 		c.MoveUp()
 		stop = true
 		layerSize+=2;
