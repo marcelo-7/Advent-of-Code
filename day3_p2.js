@@ -31,7 +31,7 @@ function Map() {
 		sumSurrounding += (get_map(x-1,y  )==undefined) ? 0 : get_map(x-1,y  );	//6
 		sumSurrounding += (get_map(x-1,y-1)==undefined) ? 0 : get_map(x-1,y-1);	//7
 		sumSurrounding += (get_map(x  ,y-1)==undefined) ? 0 : get_map(x  ,y-1);	//8
-		
+		//p("Checking around ("+x+","+y+") and found "+sumSurrounding)
 		return sumSurrounding
 		
 	}
@@ -82,9 +82,10 @@ function Coordinate(x,y,value,goal) {
 	this.areWeThereYet = function() {
 		return (this.value == this.goal) ? true : false;
 	}
-	this.getSurroundingValues = function(array,x,y) {
-		//array[x+1,y]
+	this.getGoal = function () {
+		return this.goal;
 	}
+	
 	
 }
 
@@ -93,9 +94,14 @@ function walkInCircles(endPos) {
 	// We assume that we have an infinite two-dimensional matrix with an x and y plane
 	// In the center (origo) we have a 1 at position (0,0) (x,y)
 	
+	//Initiate matrix
+	var m = new Map();
+		//create the first two coordinates in the map
+		m.set(0,0,1)
+		m.set(1,0,1)
+		
 	// Lets create a coordinate starting one step to the right of origo (1,0) with the starting value 2
 	var c = new Coordinate(1,0,2,endPos)
-	
 	
 	//while-loop condition
 	var stop = false;
@@ -108,53 +114,86 @@ function walkInCircles(endPos) {
 				
 		//every iteration we will move up layerSize - 2
 		for(i=1;i<=(layerSize-2);i++) {
-			if(c.moveUp()==true) {	//make a move and check if we've reached the destination
-				return c.getDistance()
+			c.moveUp()
+			
+			//new position
+			var x = c.getPosition()[0]
+			var y = c.getPosition()[1]
+			
+			//get surrounding total value in new position
+			var surroundingValues = m.surr(x,y)
+			c.setValue(surroundingValues)
+			
+			//write value to matrix
+			m.set(x,y,surroundingValues)
+			
+			if(surroundingValues> c.getGoal()) {
+				return c;
 			}
 		}
 		
 		//every iteration we will move left layerSize - 1
 		for(i=1;i<=(layerSize-1);i++) {
-			if(c.moveLeft()==true) {	//make a move and check if we've reached the destination
-				return c.getDistance()
+			c.moveLeft()
+			
+			//new position
+			var x = c.getPosition()[0]
+			var y = c.getPosition()[1]
+			
+			//get surrounding total value in new position
+			var surroundingValues = m.surr(x,y)
+			c.setValue(surroundingValues)
+			
+			//write value to matrix
+			m.set(x,y,surroundingValues)
+			
+			if(surroundingValues> c.getGoal()) {
+				return c;
 			}
 		}
 		
 		//every iteration we will move down layerSize - 1
 		for(i=1;i<=(layerSize-1);i++) {
-			if(c.moveDown()==true) {	//make a move and check if we've reached the destination
-				return c.getDistance()
+			c.moveDown()
+			
+			//new position
+			var x = c.getPosition()[0]
+			var y = c.getPosition()[1]
+			
+			//get surrounding total value in new position
+			var surroundingValues = m.surr(x,y)
+			c.setValue(surroundingValues)
+			
+			//write value to matrix
+			m.set(x,y,surroundingValues)
+			
+			if(surroundingValues> c.getGoal()) {
+				return c;
 			}
 		}
 		
 		//every iteration we will move right layerSize 
 		for(i=1;i<=(layerSize);i++) {
-			if(c.moveRight()==true) {	//make a move and check if we've reached the destination
-				return c.getDistance()
+			c.moveRight()
+			
+			//new position
+			var x = c.getPosition()[0]
+			var y = c.getPosition()[1]
+			
+			//get surrounding total value in new position
+			var surroundingValues = m.surr(x,y)
+			c.setValue(surroundingValues)
+			
+			//write value to matrix
+			m.set(x,y,surroundingValues)
+			
+			if(surroundingValues> c.getGoal()) {
+				return c;
 			}
 		}
 		layerSize+=2;
 	}
-	
-	
-	
-	
 }
 
 
-var m = new Map();
-m.set(0,0,1)
-m.set(1,0,1)
-var c = new Coordinate(1,0,1,368078)
-c.moveUp()
-var x = c.getPosition()[1]
-var y = c.getPosition()[1]
-var surr = m.surr(x,y)
-p(m.surr(x,y))
-m.set(x,y,surr)
-p(m.surr(1,0))
-
-
-
-
-
+p(walkInCircles(368078).getValue())
