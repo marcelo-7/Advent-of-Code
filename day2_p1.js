@@ -4,7 +4,7 @@ function p(input) {
 
 
 fs = require('fs');
-fs.readFile('dag2.txt', 'utf8', function (err,data) {
+fs.readFile('day2_input.txt', 'utf8', function (err,data) {
 	if (err) {
 		return console.log(err)
 	}
