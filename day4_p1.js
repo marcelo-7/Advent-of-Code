@@ -10,8 +10,9 @@ function day4_p1 () {
 			return console.log(err)
 		}
 		countValidPassPhrases = 0;
-		var rows = data.split( "\n" );
-		
+		var rows = data.split( "\n\r" );
+		var rows2 = rows.replace("\r","")
+		p(rows2)
 		
 		for (r=0; r<rows.length; r++) {
 			var rowarray_strings = rows[r].replace("\r","").split(" ")	//ersätt alla CR med blankt, splitta på tab
